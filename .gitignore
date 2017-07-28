@@ -25,3 +25,6 @@ ehthumbs.db
 Icon?
 Thumbs.db
 *.swp
+
+data/model_file
+data/dataset
