@@ -26,6 +26,8 @@ Icon?
 Thumbs.db
 *.swp
 
+*.so
+results
 data/model_file
 data/dataset
 backup/
