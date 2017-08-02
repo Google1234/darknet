@@ -198,7 +198,8 @@ void draw_detections(image im, int num, float thresh, box *boxes, float **probs,
         int class = max_index(probs[i], classes);
         float prob = probs[i][class];
         if(prob > thresh){
-            int width = im.h * .006;
+            int width = 2;
+	    //int width = im.h * .006;
 
             if(0){
                 width = pow(prob, 1./2.)*10+1;
@@ -232,8 +233,14 @@ void draw_detections(image im, int num, float thresh, box *boxes, float **probs,
 
             draw_box_width(im, left, top, right, bot, width, red, green, blue);
             if (alphabet) {
-                image label = get_label(alphabet, names[class], (im.h*.03)/10);
-                draw_label(im, top + width, left, label, rgb);
+                image label = get_label(alphabet, names[class],2);
+		//image label = get_label(alphabet, names[class],(im.h*.03)/10);
+		int plot_x=top-10;
+		if(plot_x-label.h<0){plot_x=bot+10+label.h;}
+		int plot_y=right+10;
+		if(plot_y+label.w>im.w){plot_y=left-10-label.w;}
+		draw_label(im, plot_x,plot_y, label, rgb);
+		//draw_label(im, top + width, left, label, rgb);
                 free_image(label);
             }
             if (masks){
