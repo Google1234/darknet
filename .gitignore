@@ -27,7 +27,7 @@ Thumbs.db
 *.swp
 
 *.so
-results
+results/
 data/model_file
 data/dataset
 backup/
