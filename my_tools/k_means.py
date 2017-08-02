@@ -210,7 +210,7 @@ def IOU_Distance(a,b):
 #for p in geo_locs:
 #    print "%f %f" % (p.latit, p.longit)
 #let's run k_means clustering. the second parameter is the no of clusters
-cluster = clustering(geo_locs, 5 ,0.001)
+cluster = clustering(geo_locs, 5 ,0.00001)
 flag = cluster.k_means(False)
 if flag == -1:
     print "Error in arguments!"
