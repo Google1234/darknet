@@ -7,7 +7,7 @@
 *.pyc
 old/
 mnist/
-data/
+
 caffe/
 grasp/
 images/
@@ -29,5 +29,7 @@ Thumbs.db
 *.so
 results/
 data/model_file
-data/dataset
+data/dataset/BelgiumTS
+data/dataset/tt100k/data/*
+
 backup/
