@@ -1,7 +1,8 @@
 ratio=1.0#0.9
 anno_file="annotations.json"
 save_crop_nums=1
-
+error_labeled="pn40"
+true_label='pl40'
 
 
 import os
@@ -12,6 +13,9 @@ wd=os.path.join(wd,"data")
 import json
 datas=json.load(open(os.path.join(wd,anno_file),'r'))
 labels=datas["types"]
+if(error_labeled in labels):
+        labels.remove(error_labeled)
+
 imgs=datas["imgs"]
 count_dic={}
 examples_nums={}
@@ -51,6 +55,9 @@ for index  in indexs:
 		size_w,size_h=im.size
 		for obj in objs:
 			category= obj["category"]
+			if category==error_labeled:
+			    category=true_label
+			    print _path
 			xmax	= float(obj['bbox']["xmax"])
 			ymax    = float(obj['bbox']["ymax"])
 			xmin 	= float(obj['bbox']["xmin"])
@@ -85,6 +92,10 @@ for label in labels:
 	names.write(label+'\n')
 names.close()
 
+names=open(os.path.join(wd,"all_labels.txt"), 'w')
+for label in labels:
+        names.write(','+label)
+names.close()
 
 print count_dic
 ############################################################
