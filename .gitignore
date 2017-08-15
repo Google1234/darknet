@@ -29,6 +29,7 @@ Thumbs.db
 *.so
 results/
 data/model_file
+data/demo
 data/dataset/BelgiumTS
 data/dataset/tt100k/data/*
 
