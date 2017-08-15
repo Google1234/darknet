@@ -1,4 +1,7 @@
 #include "darknet.h"
+#include "dirent.h"
+#include <stdio.h>
+#include <string.h>
 
 static int coco_ids[] = {1,2,3,4,5,6,7,8,9,10,11,13,14,15,16,17,18,19,20,21,22,23,24,25,27,28,31,32,33,34,35,36,37,38,39,40,41,42,43,44,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,67,70,72,73,74,75,76,77,78,79,80,81,82,84,85,86,87,88,89,90};
 
@@ -589,16 +592,57 @@ void test_detector(char *datacfg, char *cfgfile, char *weightfile, char *filenam
     char *input = buff;
     int j;
     float nms=.3;
+
+    int first_read=1;
+    struct dirent *ent;
+    DIR *dir;
+    char dir_name[256];
+    char output[256]; 
+    strcpy(output,"prediction");
     while(1){
         if(filename){
             strncpy(input, filename, 256);
-        } else {
-            printf("Enter Image Path: ");
-            fflush(stdout);
-            input = fgets(input, 256, stdin);
-            if(!input) return;
-            strtok(input, "\n");
-        }
+        } else { 
+	    if(first_read==1)
+	    {
+		first_read=0;
+            	printf("Enter Image Dir: ");
+            	fflush(stdout);
+            	fgets(dir_name, 256, stdin);
+    		if ((dir = opendir (strtok(dir_name, "\n"))) != NULL) {
+        	/* print all the files and directories within directory */
+        	    printf("success load dir\n");        	  
+    		} else {
+        		/* could not open directory */
+        		perror ("");
+        		return;
+    		}
+	    }
+	    
+	    
+	   while(1)
+	   {
+                    if ((ent = readdir (dir)) != NULL)
+                    {
+			//printf ("%s\n", ent->d_name);
+			if(strcmp(ent->d_name, ".")==0|| strcmp(ent->d_name, "..")==0){continue;}
+            		printf ("%s\n", ent->d_name);
+			input[0]='\0';
+			strcpy(input,strtok(dir_name, "\n"));
+			strcat(input,"/");
+			strcat(input,ent->d_name);
+			strcpy(output,ent->d_name);
+			strtok(output,".");
+			break;		
+                    }  
+		    else
+		    {
+               		closedir (dir);
+			return ;	
+		    }
+	   }   
+          
+	}
         image im = load_image_color(input,0,0);
         image sized = letterbox_image(im, net.w, net.h);
         //image sized = resize_image(im, net.w, net.h);
@@ -628,16 +672,16 @@ void test_detector(char *datacfg, char *cfgfile, char *weightfile, char *filenam
             save_image(im, outfile);
         }
         else{
-            save_image(im, "predictions");
-#ifdef OPENCV
-            cvNamedWindow("predictions", CV_WINDOW_NORMAL); 
-            if(fullscreen){
-                cvSetWindowProperty("predictions", CV_WND_PROP_FULLSCREEN, CV_WINDOW_FULLSCREEN);
-            }
-            show_image(im, "predictions");
-            cvWaitKey(0);
-            cvDestroyAllWindows();
-#endif
+            save_image(im, output);
+//#ifdef OPENCV
+            //cvNamedWindow(output, CV_WINDOW_NORMAL); 
+            //if(fullscreen){
+            //    cvSetWindowProperty(output, CV_WND_PROP_FULLSCREEN, CV_WINDOW_FULLSCREEN);
+            //}
+            //show_image(im, output);
+            //cvWaitKey(0);
+            //cvDestroyAllWindows();
+//#endif
         }
 
         free_image(im);

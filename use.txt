@@ -2,3 +2,7 @@ train:
 	./darknet detector train cfg/china_signs.data cfg/china_signs.cfg data/model_file/darknet19_448.conv.23 -gpus 0,1,2
 test:
 	./darknet detector test cfg/tt100k.data  cfg/tt100k_test.cfg backup/tt100k_final.weights ../py-faster-rcnn_cc/data/sign_2017/PNGImages/0000002347.png
+
+	2.input dir 
+		./darknet detector test cfg/china_signs.data  cfg/china_signs_test.cfg backup/china_signs.backup  -thresh 0.05 -hier 0.3
+		then input :  data/demo
