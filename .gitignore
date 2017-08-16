@@ -32,5 +32,9 @@ data/model_file
 data/demo
 data/dataset/BelgiumTS
 data/dataset/tt100k/data/*
-
+data/dataset/one_class/data/*
+data/results
+data/Video
+data/Videos
+data/video1
 backup/

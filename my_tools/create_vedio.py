@@ -52,17 +52,17 @@ files.sort()
 num_frames=len(files)
 	
 video_path=save_root+'rst.avi'
-fps =25
+fps =1
 fourcc = cv2.VideoWriter_fourcc(*'MJPG')
-print os.path.join(dir_name,str(files[0])+suffix)
-img=cv2.imread(os.path.join(dir_name,str(files[0])+suffix))
+print os.path.join(dir_name,"00000"+str(files[0])+suffix)
+img=cv2.imread(os.path.join(dir_name,"00000"+str(files[0])+suffix))
 videoWriter = cv2.VideoWriter(video_path, fourcc,fps,(img.shape[1], img.shape[0]))
 	# fig, axes = plt.subplots(2, 1, figsize=(16, 12))
 	# ax0, ax1 = axes.ravel()
 	
 for i in range(1,len(files)):
-    print os.path.join(dir_name,str(files[i])+suffix)
-    image=cv2.imread(os.path.join(dir_name,str(files[i])+suffix))
+    print os.path.join(dir_name,"00000"+str(files[i])+suffix)
+    image=cv2.imread(os.path.join(dir_name,"00000"+str(files[i])+suffix))
     image = cv2.resize(image, (img.shape[1], img.shape[0]))
     videoWriter.write(image)# cv2.waitKey(1)	
 videoWriter.release()

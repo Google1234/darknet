@@ -1,0 +1,5 @@
+classes=1 
+train  = data/dataset/one_class/data/train.txt
+valid  = data/dataset/one_class/data/test.txt
+names =  data/dataset/one_class/data/one_class.names
+backup = backup
